@@ -1,5 +1,6 @@
 import pytest
 import random
+import string
 
 import ch01
 
@@ -31,7 +32,22 @@ def test_with_three_elements():
     assert sorted(c.return_extremes()) == sorted(["Mauricio", "Arie"])
 
 def test_in_any_order():
-    elms = [('Mauricio', 10), ('Frank', 5)]
+    elms = [('Mauricio', 10), ('Frank', 5), ('Arie', 7)]
     random.shuffle(elms)
     c = ch01.PlanningPoker(dict(elms))
     assert sorted(c.return_extremes()) == sorted(["Mauricio", "Frank"])
+
+def test_with_random():
+    elms = [('Highest', 10), ('Lowest', 1)]
+    letters = string.ascii_lowercase
+    for i in range(8):
+        str = ''.join(random.choice(letters) for i in range(5))
+        elms.append((str, random.randint(2, 9)))
+    random.shuffle(elms)
+    c = ch01.PlanningPoker(dict(elms))
+    assert sorted(c.return_extremes()) == sorted(["Highest", "Lowest"])
+
+def test_with_duplicates():
+    c = ch01.PlanningPoker({'Mauricio': 10, 'Arie': 5,
+                            'Andy': 10, 'Annibale': 5, "Frank": 7})
+    assert sorted(c.return_extremes()) == sorted(["Mauricio", "Arie"])
