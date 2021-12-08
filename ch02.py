@@ -8,8 +8,11 @@ def substrings_between(str, open, close):
     in the original string, the first one containing "x" in between, the second one
     "y", and the last one "z".
     """
-    if str == None or len(open) == 0 or len(close) == 0:
-        return None
+    try:
+        if str == None or len(open) == 0 or len(close) == 0:
+            return None
+    except Exception as error:
+        raise error
     str_len = len(str)
     if str_len == 0:
         return []
@@ -32,3 +35,31 @@ def substrings_between(str, open, close):
     if len(my_list) == 0:
         return None
     return my_list
+
+def add_lists_of_integers(left, right):
+    if left is None or right is None:
+        return None
+    try:
+        left.reverse()
+        right.reverse()
+    except Error as error:
+        raise error
+    result = []
+    carry = 0
+    for idx in range(0, max(len(left),len(right))):
+        try:
+            left_digit = left[idx]
+        except:
+            left_digit = 0
+        try:
+            right_digit = right[idx]
+        except:
+            right_digit = 0
+        if not 0 <= left_digit <= 9 or not 0 <= right_digit <= 9:
+            raise ValueError
+        sum = left_digit + right_digit + carry
+        result.append(sum % 10)
+        carry = sum // 10
+    #result.append(carry) if carry > 0 else 0
+    result.reverse()
+    return result
