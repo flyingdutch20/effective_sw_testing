@@ -111,6 +111,10 @@ def test_add_null_empties():
     assert ch02.add_lists_of_integers([0,0], [0]) == [0]
 
 def test_add_bad_input():
+    with pytest.raises(AttributeError):
+        ch02.add_lists_of_integers(1, [1,2])
+    with pytest.raises(TypeError):
+        ch02.add_lists_of_integers()
     with pytest.raises(TypeError):
         ch02.add_lists_of_integers(["a",8], [1,2])
     with pytest.raises(TypeError):

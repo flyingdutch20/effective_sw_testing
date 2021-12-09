@@ -42,7 +42,7 @@ def add_lists_of_integers(left, right):
     try:
         left.reverse()
         right.reverse()
-    except Error as error:
+    except Exception as error:
         raise error
     result = []
     carry = 0
