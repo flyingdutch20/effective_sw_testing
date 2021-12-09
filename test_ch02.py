@@ -107,17 +107,50 @@ def test_add_null_empties():
     assert ch02.add_lists_of_integers([9,8], None) is None
     assert ch02.add_lists_of_integers([9,8], []) == [9,8]
     assert ch02.add_lists_of_integers(None, None) is None
+    assert ch02.add_lists_of_integers([], []) == []
+    assert ch02.add_lists_of_integers([0,0], [0]) == [0]
 
 def test_add_bad_input():
     with pytest.raises(TypeError):
         ch02.add_lists_of_integers(["a",8], [1,2])
     with pytest.raises(TypeError):
         ch02.add_lists_of_integers([7,8], ["a",2])
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         ch02.add_lists_of_integers([-1,8], [1,2])
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         ch02.add_lists_of_integers([1,8], [1.1,2])
+    with pytest.raises(ValueError):
+        ch02.add_lists_of_integers([1,8], [1,11,2])
 
+def test_add_single_digit():
+    assert ch02.add_lists_of_integers([1], [2]) == [3]
+    assert ch02.add_lists_of_integers([9], [2]) == [1,1]
 
+def test_add_multi_digit():
+    assert ch02.add_lists_of_integers([2,2], [3,3]) == [5,5]
+    assert ch02.add_lists_of_integers([2,9], [2,3]) == [5,2]
+    assert ch02.add_lists_of_integers([2,9,3], [1,8,3]) == [4,7,6]
+    assert ch02.add_lists_of_integers([1,7,9], [2,6,8]) == [4,4,7]
+    assert ch02.add_lists_of_integers([1,9,1,7,1], [1,8,1,6,1]) == [3,7,3,3,2]
+    assert ch02.add_lists_of_integers([9,9,8], [1,7,2]) == [1,1,7,0]
 
-assert ch02.add_lists_of_integers([1], [1]) == [2]
+def test_add_multi_digit_diff_length():
+    assert ch02.add_lists_of_integers([2,2], [3]) == [2,5]
+    assert ch02.add_lists_of_integers([3], [2,2]) == [2,5]
+    assert ch02.add_lists_of_integers([2,2], [9]) == [3,1]
+    assert ch02.add_lists_of_integers([9], [2,2]) == [3,1]
+    assert ch02.add_lists_of_integers([9,2], [1,7,3]) == [2,6,5]
+    assert ch02.add_lists_of_integers([1,7,3], [9,2]) == [2,6,5]
+    assert ch02.add_lists_of_integers([3,1,7,9], [2,6,8]) == [3,4,4,7]
+    assert ch02.add_lists_of_integers([2,6,8], [3,1,7,9]) == [3,4,4,7]
+    assert ch02.add_lists_of_integers([1,9,1,7,1], [2,1,8,1,6,1]) == [2,3,7,3,3,2]
+    assert ch02.add_lists_of_integers([2,1,8,1,6,1], [1,9,1,7,1]) == [2,3,7,3,3,2]
+    assert ch02.add_lists_of_integers([9,9,8], [9,1,7,2]) == [1,0,1,7,0]
+    assert ch02.add_lists_of_integers([9,1,7,2], [9,9,8]) == [1,0,1,7,0]
+
+def test_add_zero_digit_on_left():
+    assert ch02.add_lists_of_integers([0,0,0,1,2], [0,2,3]) == [3,5]
+    assert ch02.add_lists_of_integers([0,0,0,1,2], [0,2,9]) == [4,1]
+
+def test_add_boundary():
+    assert ch02.add_lists_of_integers([9,9], [1]) == [1,0,0]

@@ -57,9 +57,13 @@ def add_lists_of_integers(left, right):
             right_digit = 0
         if not 0 <= left_digit <= 9 or not 0 <= right_digit <= 9:
             raise ValueError
+        if not isinstance(left_digit, int) or not isinstance(right_digit, int):
+            raise ValueError
         sum = left_digit + right_digit + carry
         result.append(sum % 10)
         carry = sum // 10
-    #result.append(carry) if carry > 0 else 0
+    result.append(carry) if carry > 0 else 0
     result.reverse()
+    while len(result) > 1 and result[0] == 0:
+        del(result[0])
     return result
